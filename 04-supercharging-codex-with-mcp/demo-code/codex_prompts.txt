@@ -1,0 +1,36 @@
+================================================================================
+OPENAI CODEX DEMO PROMPTS: TOPIC 4 (SUPERCHARGING CODEX WITH MCP)
+================================================================================
+
+SETUP STEP (TERMINAL):
+--------------------------------------------------------------------------------
+1. Initialize the SQLite database with the new schema:
+   `python setup_db.py`
+
+2. Run the application to show the crash:
+   `python app.py`
+   Output:
+   `sqlite3.IntegrityError: NOT NULL constraint failed: users.tenant_id`
+
+
+HERO PROMPT (SUBMIT TO CODEX WITH MCP ACTIVE):
+--------------------------------------------------------------------------------
+"Investigate why app.py crashes with IntegrityError on the users table. 
+Use the 'sqlite-dev' MCP tool to inspect the live schema of the 'users' table, 
+diagnose the discrepancy between the Python code and database, and apply the fix to app.py."
+
+
+WHAT CODEX WILL DO DURING THE DEMO:
+--------------------------------------------------------------------------------
+1. Codex invokes the MCP tool: `sqlite-dev.inspect_table_schema(table_name="users")`.
+2. The MCP server returns:
+   - id (INTEGER PK)
+   - username (VARCHAR NOT NULL)
+   - email (VARCHAR NOT NULL)
+   - tenant_id (VARCHAR NOT NULL)
+3. Codex identifies that `app.py` failed to account for `tenant_id`.
+4. Codex modifies `app.py`:
+   - Adds `tenant_id: str` to `User` dataclass (or sets a default).
+   - Updates `cursor.execute("INSERT INTO users (username, email, tenant_id) VALUES (?, ?, ?)", ...)`
+5. Re-run `python app.py`:
+   Output: `User created successfully with ID: 1`

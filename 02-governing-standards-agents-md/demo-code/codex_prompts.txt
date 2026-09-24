@@ -1,0 +1,30 @@
+================================================================================
+OPENAI CODEX DEMO PROMPTS: TOPIC 2 (GOVERNING STANDARDS WITH AGENTS.MD)
+================================================================================
+
+DEMO STEP 1: UNGOVERNED PROMPT (AGENTS.md temporarily hidden/renamed to AGENTS.md.bak)
+--------------------------------------------------------------------------------
+"Create an OrderNotificationService that sends a JSON order payload to an external webhook URL."
+
+EXPECTED UNGOVERNED OUTPUT (TO CRITIQUE):
+- Imports `requests` (blocking, synchronous).
+- Uses `print()` for errors.
+- Uses generic `except Exception as e:` and returns None or swallows error.
+- Places file in root or random folder without companion tests.
+
+
+DEMO STEP 2: RESTORE AGENTS.md (Rename back to AGENTS.md)
+--------------------------------------------------------------------------------
+Show the rules in AGENTS.md (Dependencies, Error handling, Test requirement).
+
+
+DEMO STEP 3: GOVERNED PROMPT EXECUTION (Exact same prompt)
+--------------------------------------------------------------------------------
+"Create an OrderNotificationService that sends a JSON order payload to an external webhook URL."
+
+EXPECTED GOVERNED OUTPUT (HERO MOMENT):
+- Cites repository configuration: "Adhering to rules declared in AGENTS.md..."
+- Implements `src/services/order_notification.py` using `httpx.AsyncClient`.
+- Imports and raises `NotificationDeliveryError` from `src.errors.app_error`.
+- Uses `logging.getLogger(__name__)`.
+- Automatically generates companion unit test in `tests/services/test_order_notification.py` with pytest mocks!

@@ -1,0 +1,35 @@
+================================================================================
+OPENAI CODEX DEMO PROMPTS: TOPIC 1 (RAPID CODEBASE ONBOARDING)
+================================================================================
+
+PROMPT 1: NAIVE UN-SCOPED PROMPT (Optional comparison - to show why vague questions fail)
+--------------------------------------------------------------------------------
+"Can you explain how this project works and what it does?"
+Result: Produces a generic, high-level overview without architectural nuance.
+
+
+PROMPT 2: THE 3-PART SCOPED EXPLORATION PROMPT (The Hero Demo Prompt)
+--------------------------------------------------------------------------------
+"Starting from `routes/auth.py` at the `register_user` endpoint, trace the entire execution flow down to the persistence layer. 
+
+Please provide:
+1. The exact sequence of middleware executed before the controller runs.
+2. The core business operations executed in the service layer.
+3. The persistence behavior in `models/user.py` and any security side-effects (e.g. hashing/salting).
+4. A concise ASCII or Markdown sequence diagram showing the request/response path."
+
+
+EXPECTED CODEX OUTPUT STRUCTURE:
+--------------------------------------------------------------------------------
+1. Entry Point: POST /api/v1/users/register (routes/auth.py)
+2. Middleware Invocations:
+   - apply_rate_limit (middleware/rate_limiter.py): Limits requests to 5 attempts per 60s per IP.
+   - verify_client_identity (middleware/token_validator.py): Validates X-Client-App-Id header.
+3. Service Layer (services/user_service.py):
+   - Generates 16-byte random salt.
+   - Computes SHA-256 password hash.
+4. Persistence Layer (models/user.py):
+   - Assigns UUIDv4 and UTC timestamp.
+   - Saves record with IP origin into UserRepository.
+5. Sequence Diagram:
+   Client -> Route -> RateLimiter -> TokenValidator -> UserService -> UserRepository

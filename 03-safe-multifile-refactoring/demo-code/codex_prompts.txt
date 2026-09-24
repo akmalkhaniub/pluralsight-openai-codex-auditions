@@ -1,0 +1,38 @@
+================================================================================
+OPENAI CODEX DEMO PROMPTS: TOPIC 3 (SAFE MULTI-FILE REFACTORING)
+================================================================================
+
+BASELINE STEP (TERMINAL):
+--------------------------------------------------------------------------------
+Run: `pytest test_pipeline.py`
+Expected: 1 passed in 0.05s (Green baseline verified).
+
+
+REFACTORING INSTRUCTION (PROMPT TO CODEX):
+--------------------------------------------------------------------------------
+"Refactor `DataIngestionEngine` in `engine.py` from a synchronous list return to an asynchronous stream generator using `async def read_records(...)` and `yield`.
+
+Then:
+1. Update `controller.py` so `process_upload` is an async function consuming the stream with `async for`.
+2. Adapt `test_pipeline.py` to use `pytest.mark.asyncio` and `await`.
+3. Run `pytest test_pipeline.py` inside your execution sandbox to verify zero regressions."
+
+
+WHAT CODEX WILL DO DURING THE DEMO:
+--------------------------------------------------------------------------------
+1. Modify `engine.py`:
+   - `async def read_records(self, raw_data: List[str]) -> AsyncGenerator[Dict[str, str], None]:`
+   - `await asyncio.sleep(0.01)`
+   - `yield {"id": parts[0], "value": parts[1]}`
+
+2. Modify `controller.py`:
+   - `async def process_upload(self, raw_lines: List[str]) -> Dict[str, any]:`
+   - Iterates using `async for record in self.engine.read_records(raw_lines):`
+
+3. Modify `test_pipeline.py`:
+   - Adds `@pytest.mark.asyncio`
+   - `async def test_ingestion_controller_success():`
+   - `result = await controller.process_upload(raw_lines)`
+
+4. Executes the sandbox test command:
+   - Pytest runs and passes!
