@@ -1,0 +1,11 @@
+STEP 1: WITHOUT A SKILL (new thread in the skills-take project)
+Write release notes for everything that changed since v1.2.0.
+
+STEP 2: ADD THE SKILL (integrated terminal, Ctrl+J, one line)
+Copy-Item -Recurse ..\skills-kit\release-notes .agents\skills\
+
+STEP 3: CALL IT BY NAME (new thread)
+Type $rel, choose "Release Notes" (Project) from the picker, then type: since v1.2.0
+
+STEP 4: ASK IN PLAIN WORDS (new thread, after undoing the file from step 3)
+Draft the changelog for what we shipped since v1.2.0.

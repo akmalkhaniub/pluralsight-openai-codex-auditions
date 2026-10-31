@@ -1,0 +1,34 @@
+================================================================================
+CODEX PROMPTS & INTERACTION GUIDE (AUDITION v3)
+================================================================================
+
+PROMPT 1 (Task in photo-take project - New Thread):
+--------------------------------------------------------------------------------
+Let users upload a profile photo. Add upload_avatar(user_id, file) to app/profile.py that reads the file stream and saves it under avatars/ using open(), and updates the user's avatar_url. Add tests and run them.
+
+
+STEP 2 (Switch to Editor):
+--------------------------------------------------------------------------------
+Type into composer:
+/review
+
+Select from dropdown:
+"Review uncommitted changes"
+
+
+STEP 3 (Inline Comment on line 26 - "with destination.open..."):
+--------------------------------------------------------------------------------
+Click '+' on the line opening the destination file:
+Agreed: if saving fails, delete the half-saved file. Add a test for it.
+
+
+STEP 4 (Follow-up Message in Composer):
+--------------------------------------------------------------------------------
+Address the inline comments and keep the scope minimal.
+
+
+STEP 5 (Re-Review Verification):
+--------------------------------------------------------------------------------
+/review  ->  "Review uncommitted changes"
+Result: "No actionable issues found."
+================================================================================

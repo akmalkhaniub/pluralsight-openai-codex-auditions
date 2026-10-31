@@ -1,0 +1,14 @@
+PROMPT 1 (new thread in the photo-take project):
+Let users upload a profile photo. Add upload_avatar(user_id, file) to app/profile.py that saves the file under avatars/ and updates the user's avatar_url. Add tests and run them.
+
+REVIEW (same thread):
+/review  ->  choose "Review uncommitted changes"
+
+INLINE COMMENT (hover line 26, the "open" line, click +):
+Agreed: if saving fails, delete the half-saved file. Add a test for it.
+
+FOLLOW-UP MESSAGE:
+Address the inline comments and keep the scope minimal.
+
+REVIEW AGAIN:
+/review  ->  "Review uncommitted changes"

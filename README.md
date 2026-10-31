@@ -1,69 +1,50 @@
 # Pluralsight Video Audition Packages: OpenAI Codex
 
-This repository contains four complete, self-contained audition packages designed for the **Pluralsight Author Audition** on **OpenAI Codex**. Each package has been structured to satisfy Pluralsight's 5–8 minute audition requirements and scoring rubric.
+This repository contains complete, production-ready audition packages designed specifically for the **Pluralsight Author Audition** on **OpenAI Codex**. Every package is engineered to satisfy Pluralsight's 5–8 minute audition requirements and scoring rubric.
 
 ---
 
-## Audition Packages Overview
+## 🎯 Featured GUI-Driven Packages (VS Code Codex Extension)
 
-```
-pluralsight-openai-codex-auditions/
-├── 01-rapid-codebase-onboarding/
-│   ├── AUDITION_OUTLINE.md          <-- Official Pluralsight Outline Table
-│   ├── SLIDE_DECK_CONTENT.md        <-- Slide-by-slide text & animation triggers
-│   ├── TIMED_NARRATION_SCRIPT.md    <-- Timed transcript with visual action cues
-│   ├── README.md                    <-- Recording checklist & instructions
-│   └── demo-code/                   <-- Multi-tier microservice with routes, middleware, models
-│
-├── 02-governing-standards-agents-md/
-│   ├── AUDITION_OUTLINE.md
-│   ├── SLIDE_DECK_CONTENT.md
-│   ├── TIMED_NARRATION_SCRIPT.md
-│   ├── README.md
-│   └── demo-code/                   <-- AGENTS.md, AppError classes, and companion test targets
-│
-├── 03-safe-multifile-refactoring/
-│   ├── AUDITION_OUTLINE.md
-│   ├── SLIDE_DECK_CONTENT.md
-│   ├── TIMED_NARRATION_SCRIPT.md
-│   ├── README.md
-│   └── demo-code/                   <-- Async data pipeline with pytest self-healing suite
-│
-└── 04-supercharging-codex-with-mcp/
-    ├── AUDITION_OUTLINE.md
-    ├── SLIDE_DECK_CONTENT.md
-    ├── TIMED_NARRATION_SCRIPT.md
-    ├── README.md
-    └── demo-code/                   <-- Standalone SQLite MCP server & schema mismatch demo
-```
+These three packages are tailored specifically for developers demonstrating the **OpenAI Codex Extension inside VS Code (GUI interface)**—featuring context pinning (`#file`), visual side-by-side diff viewers, `@mention` skill autocompletion, and the extension's "Modified Files" review tree:
+
+| Package | Audition Title | Screencast Focus (VS Code GUI) | Target Time |
+| :--- | :--- | :--- | :---: |
+| [**05-gui-autonomous-tdd-loop**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/05-gui-autonomous-tdd-loop/README.md) | *The Autonomous TDD Loop in OpenAI Codex* | Pinning `#test_discounts.py` in the Codex panel $\rightarrow$ Reviewing editor diff $\rightarrow$ One-click Accept $\rightarrow$ 100% Green. | ~6:30 |
+| [**06-gui-custom-skills**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/06-gui-custom-skills/README.md) | *Custom Reusable Skills in OpenAI Codex* | Packaging `.codex/skills/` $\rightarrow$ Triggering `@api-docgen` via GUI dropdown $\rightarrow$ Reviewing generated markdown doc. | ~6:30 |
+| [**07-gui-visual-multifile-refactor**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/07-gui-visual-multifile-refactor/README.md) | *Visual Multi-File Refactoring in OpenAI Codex* | Tagging 3 files (`#schemas`, `#services`, `#routes`) $\rightarrow$ Navigating the "Modified Files" tree $\rightarrow$ "Accept All Changes". | ~6:30 |
 
 ---
 
-## Detailed Comparison Matrix
+## 📂 Additional Architecture & Ecosystem Packages
 
-| Topic Package | Level | Target Video Time | Demo Focus | Key Pluralsight Strength |
-| :--- | :---: | :---: | :--- | :--- |
-| [**01. Rapid Codebase Onboarding**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/01-rapid-codebase-onboarding/README.md) | Intermediate | ~7:15 | Codex tracing an undocumented auth pipeline from route to DB | **Most Relatable Story:** Solves the universal pain of joining an unfamiliar project. Effortless to record. |
-| [**02. Governing Standards with AGENTS.md**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/02-governing-standards-agents-md/README.md) | Intermediate | ~7:15 | Enforcing forbidden packages, error types, and automatic test generation | **Enterprise Appeal:** High value for team leads; demonstrates governance and prompt fatigue elimination. |
-| [**03. Safe Multi-File Refactoring**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/03-safe-multifile-refactoring/README.md) | Intermediate | ~7:15 | Multi-file sync-to-async refactor with sandboxed `pytest` verification | **High Technical Impact:** Shows worktree coordination, dependency mapping, and automated test self-healing. |
-| [**04. Supercharging Codex with MCP**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/04-supercharging-codex-with-mcp/README.md) | Advanced | ~7:15 | Resolving a live database schema discrepancy using an MCP server | **Cutting-Edge Modern Tech:** Highlights agent tool calling, environment awareness, and open standards. |
+| Package | Audition Title | Focus Area | Target Time |
+| :--- | :--- | :--- | :---: |
+| [**01-rapid-codebase-onboarding**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/01-rapid-codebase-onboarding/README.md) | *Rapid Codebase Onboarding Using OpenAI Codex* | Scoped prompt traversal from route to middleware down to DB. | ~7:15 |
+| [**02-governing-standards-agents-md**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/02-governing-standards-agents-md/README.md) | *Governing OpenAI Codex with `AGENTS.md`* | Enforcing package whitelists, error hierarchies, and test mandates. | ~7:15 |
+| [**03-safe-multifile-refactoring**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/03-safe-multifile-refactoring/README.md) | *Safe Multi-File Refactoring and Verification* | Sync-to-async data engine refactor with sandboxed `pytest` verification. | ~7:15 |
+| [**04-supercharging-codex-with-mcp**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/04-supercharging-codex-with-mcp/README.md) | *Supercharging OpenAI Codex with MCP* | Connecting Codex to a Model Context Protocol server to inspect live DB schemas. | ~7:15 |
+| [**08-codex-skills-release-notes**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/08-codex-skills-release-notes/version1/README.md) | *Reusable Team Workflows with Codex Skills* | Automated release notes generator, semantic versioning, and changelog drafting. | ~7:15 |
+| [**09-agents-md-team-rules**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/09-agents-md-team-rules/version1/README.md) | *Team Rules for OpenAI Codex with AGENTS.md* | Deterministic error handling rules, test execution gates, and docstring standards. | ~7:15 |
+| [**10-codex-code-review**](file:///g:/ReplitProjects/pluralsight-openai-codex-auditions/10-codex-code-review/version1/README.md) | *Who Reviews the AI? Code Review with OpenAI Codex* | Automated PR code review, finding security risks in AI-generated code, targeted fixes. | ~7:35 |
+
 
 ---
 
-## Pluralsight Audition Recording Checklist
+## Package Directory Structure
 
-Before hitting record, ensure your setup meets these rubric criteria:
+Every topic folder is fully autonomous and contains:
+1. `AUDITION_OUTLINE.md`: The official filled-out Pluralsight Video Audition Outline form.
+2. `SLIDE_DECK_CONTENT.md`: Slide-by-slide copy with animation triggers mapped to Pluralsight's PowerPoint template.
+3. `TIMED_NARRATION_SCRIPT.md`: Exact word-for-word spoken transcript with second-by-second timestamps and visual callout cues.
+4. `README.md`: Step-by-step recording checklist and setup guide.
+5. `demo-code/`: Working sample projects, configuration files, test suites, and pre-formatted prompt texts.
 
-### 1. Screen & Editor Setup
-* **Resolution:** 1920x1080 (16:9).
-* **IDE Font Size:** 16pt–18pt (or 125%–150% UI zoom) so line numbers and code are legible on mobile.
-* **Workspace Cleanliness:** Hide the VS Code status bar and sidebar (`Ctrl+B`). Close extraneous editor tabs.
-* **Cursor Discipline:** **DO NOT circle or point at code with your mouse cursor.** Hand off mouse during explanations; use post-production bounding boxes (orange/blue) for callouts.
+---
 
-### 2. Audio & Narration Quality
-* **Audio Track:** Record voice on a separate dedicated track (48kHz, 24-bit).
-* **Environment:** Quiet room; no audible computer fans, room echo, keyboard clicks, or mouse taps.
-* **Delivery:** Energetic, conversational, expert human tone (not robotic). Leave 1-second clean pauses between slide transitions.
+## Pluralsight Audition Recording Best Practices
 
-### 3. Timing Constraint
-* **Duration:** Keep the total video between **5:30 and 7:45**. (Rubric requires strictly 5–8 minutes; under 5 min fails, over 10 min fails).
+* **Screen Setup:** 1920x1080 (16:9), 125% IDE scaling, dark theme. Hide unnecessary sidebars (`Ctrl+B`).
+* **Mouse Discipline:** **Strictly DO NOT circle or wave the mouse cursor.** Keep hands off the mouse during spoken explanations. All highlights should be added in post-production using colored bounding boxes (orange/blue).
+* **Audio Track:** Record clean vocal audio on a dedicated track (48kHz, 24-bit). Ensure zero keyboard clatter or fan noise.
+* **Timing:** Strictly between **5 and 8 minutes** (all scripts are timed to ~6:30–7:15).

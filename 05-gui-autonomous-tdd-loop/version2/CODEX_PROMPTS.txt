@@ -1,0 +1,26 @@
+IMPLEMENTATION PROMPT
+
+Read BUSINESS_RULES.md and test_discounts.py. Implement DiscountEngine.calculate_total in discount_service.py.
+Orders below $100 keep their original total; orders of $100 or more receive 10% off.
+Use Decimal and round the final total to cents with ROUND_HALF_UP.
+Modify only discount_service.py. Do not change tests, assertions, the public signature, or dependencies.
+Run python -m unittest -v test_discounts. If it fails, diagnose the failure and fix the implementation.
+Report the changed file, test command and actual result. If a test conflicts with the rules, stop and explain the conflict.
+
+REFACTOR PROMPT
+
+Review discount_service.py for a small readability improvement without changing behavior or the public signature.
+If the two branches repeat rounding, compute the amount first and round once.
+Modify only discount_service.py and keep test_discounts.py unchanged.
+Run python -m unittest -v test_discounts again and explain why behavior is preserved.
+If the code is already this simple, explain that no useful refactor is needed instead of adding complexity.
+
+FOLLOW-UP IF EXECUTION IS UNAVAILABLE
+
+Report why you could not execute the tests and the exact command I should run locally.
+Do not describe the tests as passing without execution.
+
+RECORDING NOTES
+Reference file names or use the attachment control actually available in your installed extension.
+Do not teach a hash chip as a permission control or promise a particular Accept button.
+These are instructions, not filesystem restrictions. Inspect the actual diff and verify test-file integrity.

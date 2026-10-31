@@ -1,0 +1,26 @@
+================================================================================
+CODEX EXTENSION GUI PROMPT: TOPIC 7 (VISUAL MULTI-FILE REFACTORING)
+================================================================================
+
+1. WHAT TO TAG IN THE CODEX EXTENSION PROMPT BOX:
+--------------------------------------------------------------------------------
+Tag the three interdependent files using the '#' symbol:
+`#schemas/user.py #services/user_service.py #routes/user_routes.py`
+
+
+2. PROMPT TEXT TO PASTE:
+--------------------------------------------------------------------------------
+#schemas/user.py #services/user_service.py #routes/user_routes.py Refactor all user attributes from snake_case to camelCase (e.g. userId, firstName, lastName, userRole) using Pydantic aliases in schemas/user.py. Ensure the dictionary returned in services/user_service.py and the response returned in routes/user_routes.py remain completely synchronized.
+
+
+3. WHAT TO DEMONSTRATE IN THE GUI:
+--------------------------------------------------------------------------------
+1. In the Codex extension panel, observe the 3 file tags. Hit enter.
+2. Observe the "Modified Files" tree listing all 3 files with diff counts:
+   - `schemas/user.py`
+   - `services/user_service.py`
+   - `routes/user_routes.py`
+3. Click `schemas/user.py` in the tree to inspect the Pydantic alias diff.
+4. Click `services/user_service.py` in the tree to show the dictionary keys updated.
+5. Click "Accept All Changes" button in the Codex sidebar toolbar.
+6. Run `pytest test_api.py` in the terminal to verify zero regressions!

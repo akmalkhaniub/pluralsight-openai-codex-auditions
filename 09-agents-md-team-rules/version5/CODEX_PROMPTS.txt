@@ -1,0 +1,5 @@
+TASK PROMPT (use the identical text both times, each in a new thread in the agents-take project)
+Add apply_coupon(total, code) to shop/pricing.py. SAVE10 takes 10% off the total; any other code is invalid.
+
+ADD THE RULES (integrated terminal, Ctrl+J, one line, after pressing Undo on the first result)
+Copy-Item ..\agents-kit\AGENTS.md .

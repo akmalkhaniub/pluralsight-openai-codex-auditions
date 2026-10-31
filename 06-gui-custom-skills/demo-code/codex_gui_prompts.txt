@@ -1,0 +1,26 @@
+================================================================================
+CODEX EXTENSION GUI PROMPT: TOPIC 6 (CUSTOM REUSABLE SKILLS)
+================================================================================
+
+1. HOW TO TRIGGER IN THE CODEX VS CODE GUI:
+--------------------------------------------------------------------------------
+In the Codex Extension chat input box:
+Type: `@api-docgen #controllers/payment.py`
+
+(Or type `@` and select `api-docgen` from the auto-complete dropdown, then attach `#controllers/payment.py`).
+
+
+2. WHAT CODEX DOES AUTOMATICALLY:
+--------------------------------------------------------------------------------
+1. Discovers the skill from `.codex/skills/api-docgen/SKILL.md`.
+2. Inspects `controllers/payment.py`.
+3. Creates `docs/api/payment.md` containing:
+   - Endpoint: POST /api/v1/payments/charge
+   - Headers: X-Idempotency-Key
+   - Parameters Table: account_id, amount_cents, currency, payment_token
+   - HTTP Status Code Matrix:
+     * 200 OK: Payment succeeded
+     * 400 Bad Request: Amount exceeds $10,000
+     * 402 Payment Required: Card declined by issuing bank
+     * 422 Unprocessable Entity: Missing required fields
+   - Copy-pasteable cURL example with -H "X-Idempotency-Key: ..." and -d '{...}'

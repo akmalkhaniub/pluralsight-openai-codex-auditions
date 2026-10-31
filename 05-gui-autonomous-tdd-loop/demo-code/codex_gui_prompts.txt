@@ -1,0 +1,25 @@
+================================================================================
+CODEX EXTENSION GUI PROMPT & WORKFLOW: TOPIC 5 (AUTONOMOUS TDD LOOP)
+================================================================================
+
+1. TERMINAL BASELINE STEP:
+--------------------------------------------------------------------------------
+Command: `pytest test_discounts.py`
+Expected Result: 4 FAILED in 0.08s (Red baseline with NotImplementedError).
+
+
+2. CODEX EXTENSION GUI PROMPT (Paste into the Codex Chat/Agent side panel):
+--------------------------------------------------------------------------------
+#test_discounts.py Implement DiscountEngine in discount_service.py so all test cases in test_discounts.py pass. Do not modify test_discounts.py.
+
+
+3. WHAT TO DEMONSTRATE IN THE GUI:
+--------------------------------------------------------------------------------
+1. Show the `#test_discounts.py` context chip pinned in the Codex input box.
+2. Hit enter.
+3. Show the side-by-side split diff that automatically opens in the VS Code editor:
+   - Left: Empty `raise NotImplementedError`
+   - Right: Green additions implementing volume tiers (10%, 20%), coupon logic, and rounding.
+4. Point to the "Accept" checkmark in the VS Code editor toolbar (use a post-production callout box; do not circle with mouse).
+5. Click "Accept".
+6. In terminal, run: `pytest test_discounts.py` -> 4 PASSED in 0.02s!

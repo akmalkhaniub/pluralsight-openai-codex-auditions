@@ -1,0 +1,14 @@
+PROMPT 1 (new thread in the photo-take project):
+Let users upload a profile photo. Add upload_avatar(user_id, file) to app/profile.py that saves the file under avatars/ and updates the user's avatar_url. Add tests and run them.
+
+REVIEW (same thread):
+/review  ->  choose "Last turn"
+
+INLINE COMMENT (hover the line that writes the file, click +):
+Reject files over 5 MB here.
+
+FOLLOW-UP MESSAGE:
+Address the inline comments and keep the scope minimal.
+
+REVIEW AGAIN:
+/review  ->  "Last turn"

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pluralsight Audition Studio: The Autonomous TDD Loop</title>
+  <style>
+    :root {
+      --bg: #141217;
+      --card-bg: #1F1B24;
+      --accent-orange: #F15B2A;
+      --accent-teal: #00B4D8;
+      --text-white: #FFFFFF;
+      --text-muted: #A39EAF;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text-white); display: flex; height: 100vh; overflow: hidden; }
+
+    /* Left: Slide Preview */
+    .slide-panel {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #2D2736;
+      background: #0B0A0D;
+    }
+    .slide-viewer {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+    .slide-canvas {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #1B181E;
+      border: 1px solid #3A3247;
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+    }
+    .slide-tag {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-orange);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .slide-title { font-size: 26px; font-weight: 700; color: #FFF; margin-bottom: 12px; }
+    .slide-desc { font-size: 15px; color: var(--text-muted); line-height: 1.5; }
+    .slide-list { margin-top: 15px; list-style: none; }
+    .slide-list li { margin-bottom: 10px; font-size: 14px; display: flex; align-items: flex-start; }
+    .slide-list li::before { content: "•"; color: var(--accent-orange); font-weight: bold; font-size: 18px; margin-right: 8px; line-height: 1; }
+
+    /* Controls Bar */
+    .controls-bar {
+      height: 70px;
+      border-top: 1px solid #2D2736;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      background: #16131A;
+    }
+    .btn {
+      background: var(--accent-orange);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn:hover { background: #d94a1b; }
+    .btn-secondary { background: #2A2433; color: #FFF; }
+    .btn-secondary:hover { background: #372F42; }
+    .timer-display { font-family: monospace; font-size: 22px; font-weight: 700; color: var(--accent-teal); }
+
+    /* Right: Teleprompter Transcript */
+    .script-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      overflow-y: auto;
+      padding: 30px;
+    }
+    .script-header { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #332B3D; }
+    .script-header h2 { font-size: 18px; color: var(--text-white); }
+    .script-header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    .cue-card {
+      background: #17141C;
+      border-left: 4px solid var(--accent-orange);
+      padding: 18px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 18px;
+      transition: all 0.2s ease;
+    }
+    .cue-card.active {
+      border-left-color: var(--accent-teal);
+      background: #231E2C;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.15);
+    }
+    .cue-time {
+      font-family: monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-teal);
+      margin-bottom: 6px;
+    }
+    .cue-instruction {
+      font-size: 12px;
+      font-weight: 600;
+      color: #FFB703;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cue-speech {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #E6E4EA;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide Preview Panel -->
+  <div class="slide-panel">
+    <div class="slide-viewer">
+      <div class="slide-canvas" id="slideCanvas">
+        <div class="slide-tag" id="slideTag">PLURALSIGHT AUDITION</div>
+        <div class="slide-title" id="slideTitle">The Autonomous TDD Loop in OpenAI Codex</div>
+        <div class="slide-desc" id="slideDesc">From Failing Specifications to Verified Green Code in VS Code</div>
+        <ul class="slide-list" id="slideList"></ul>
+      </div>
+    </div>
+
+    <!-- Playback Controls -->
+    <div class="controls-bar">
+      <div style="display: flex; gap: 10px;">
+        <button class="btn" id="startBtn" onclick="toggleTimer()">▶ Start Rehearsal</button>
+        <button class="btn btn-secondary" onclick="resetTimer()">↺ Reset</button>
+      </div>
+      <div class="timer-display" id="timer">00:00 / 06:30</div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="prevSlide()">◀ Prev</button>
+        <button class="btn btn-secondary" onclick="nextSlide()">Next ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teleprompter Narration Panel -->
+  <div class="script-panel" id="scriptPanel">
+    <div class="script-header">
+      <h2>Teleprompter & Delivery Guide</h2>
+      <p>Follow the spoken transcript below. Keep your hands off the mouse during spoken lines.</p>
+    </div>
+
+    <div class="cue-card active" id="cue-0">
+      <div class="cue-time">[0:00 - 0:25] • SLIDE 1</div>
+      <div class="cue-instruction">Tone: Confident, engaging, warm. Natural pacing.</div>
+      <div class="cue-speech">
+        "Hello everyone, and welcome! My name is [Your Name]. In this session, we’re exploring <strong>The Autonomous Test-Driven Development Loop using the OpenAI Codex Extension in VS Code</strong>.<br><br>
+        <em>[1-second pause]</em><br><br>
+        Test-Driven Development is an industry gold standard, but manually writing all the boilerplate to satisfy test assertions can slow down feature delivery."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-1">
+      <div class="cue-time">[0:25 - 1:10] • SLIDE 2</div>
+      <div class="cue-instruction">Tone: Empathetic, motivating. Click bullets in sync.</div>
+      <div class="cue-speech">
+        "Writing your tests before your code guarantees high reliability, but it also creates friction when you have to write dozens of lines of repetitive logic.<br><br>
+        With the OpenAI Codex extension in VS Code, we can bridge this gap by pinning our test suite directly into the extension's side panel.<br><br>
+        By the end of this audition, you’ll know how to reference your test suite in the Codex GUI, review generated side-by-side diffs, and turn red test suites completely green in minutes."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-2">
+      <div class="cue-time">[1:10 - 1:35] • SLIDE 3</div>
+      <div class="cue-instruction">Tone: Relatable, problem-focused.</div>
+      <div class="cue-speech">
+        "Let’s look at our scenario. Marcus is an engineer building an e-commerce discount calculator. He has already written a suite of four thorough unit tests covering volume discounts and coupon stacking.<br><br>
+        If Marcus runs pytest right now, every single test fails because the service file is just an empty placeholder. Let’s see how Codex turns these specifications into reality."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-3">
+      <div class="cue-time">[1:35 - 2:05] • SLIDE 4</div>
+      <div class="cue-instruction">Tone: Instructional, systematic.</div>
+      <div class="cue-speech">
+        "The Codex extension interface makes this workflow visual and controllable in three steps:<br><br>
+        First, we attach our test file as a context anchor using the hash symbol in the Codex prompt box.<br>
+        Second, Codex displays a side-by-side visual diff in VS Code, showing exactly what it intends to add.<br>
+        And third, we click 'Accept' and verify the tests in our terminal."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-4">
+      <div class="cue-time">[2:05 - 2:35] • SLIDE 5</div>
+      <div class="cue-instruction">Tone: Authoritative, deliberate. (Teal Accent Slide)</div>
+      <div class="cue-speech">
+        "Here is a critical rule when doing TDD with AI:<br><br>
+        <em>[1-second pause]</em><br><br>
+        <strong>'Never allow the AI to edit your test file to make it pass.'</strong><br><br>
+        In the Codex GUI, we pass the test file as read-only context and explicitly target the implementation file as the only writable surface. Let's see this in action."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-5">
+      <div class="cue-time">[2:35 - 2:45] • SLIDE 6</div>
+      <div class="cue-instruction">Transition: Switch screen to VS Code.</div>
+      <div class="cue-speech">
+        "Let's switch over to VS Code and watch Marcus execute the TDD loop live in the Codex extension."
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-6">
+      <div class="cue-time">[2:45 - 5:45] • LIVE SCREENCAST IN VS CODE</div>
+      <div class="cue-instruction">Action: Follow demo-code steps. Use callout boxes; NO cursor circling.</div>
+      <div class="cue-speech">
+        <strong>1. Red Failure:</strong> Run <code>pytest test_discounts.py</code> in terminal. Show 4 FAILED.<br>
+        <strong>2. Prompting:</strong> In Codex panel, enter: <code>#test_discounts.py Implement DiscountEngine in discount_service.py so all tests pass. Do not modify test_discounts.py.</code><br>
+        <strong>3. Visual Diff:</strong> Highlight side-by-side diff in VS Code. Point to green code additions.<br>
+        <strong>4. Accept & Green:</strong> Click 'Accept'. Run <code>pytest test_discounts.py</code> in terminal. Show 4 PASSED in green!
+      </div>
+    </div>
+
+    <div class="cue-card" id="cue-7">
+      <div class="cue-time">[5:45 - 6:30] • SLIDE 7</div>
+      <div class="cue-instruction">Tone: Energized, concluding.</div>
+      <div class="cue-speech">
+        "To wrap up:<br>
+        First, pin your test files directly into the Codex GUI as your behavioral contract.<br>
+        Second, enforce that your test files remain immutable so the AI cannot game the assertions.<br>
+        And third, always use the side-by-side visual diff in VS Code to review before you accept.<br><br>
+        Thank you so much for watching, and enjoy building with OpenAI Codex!"
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = [
+      {
+        tag: "PLURALSIGHT AUDITION",
+        title: "The Autonomous TDD Loop in OpenAI Codex",
+        desc: "From Failing Specifications to Verified Green Code in VS Code",
+        bullets: ["Author: [Your Name] | Senior Software Engineer", "Focus: VS Code Codex Extension GUI"]
+      },
+      {
+        tag: "OVERVIEW",
+        title: "What's In It For You?",
+        desc: "Accelerating Test-Driven Development with Codex",
+        bullets: [
+          "The TDD Friction: Writing tests first is rewarding, but boilerplate is slow.",
+          "The Codex GUI Solution: Pinning #test_discounts.py in the extension panel.",
+          "Today's Goal: Turn red test suites 100% green via side-by-side visual diffs."
+        ]
+      },
+      {
+        tag: "THE SCENARIO",
+        title: "Marcus's Discount Calculator",
+        desc: "The Problem: Turning Strict Specifications into Reality",
+        bullets: [
+          "Business Rules: 10% volume discount, 20% tier, coupon stacking, rounding.",
+          "Starting State: test_discounts.py written (4 tests). discount_service.py is empty.",
+          "Terminal Status: 'raise NotImplementedError' (RED FAILING)."
+        ]
+      },
+      {
+        tag: "WORKFLOW",
+        title: "The 3-Step Codex GUI Loop",
+        desc: "Interactive Execution in VS Code",
+        bullets: [
+          "1. Context Pinning: Tag #test_discounts.py as read-only memory.",
+          "2. Side-by-Side Diff: Review green additions before saving.",
+          "3. One-Click Accept: Accept in toolbar and verify green in integrated terminal."
+        ]
+      },
+      {
+        tag: "THE GOLDEN RULE",
+        title: "\"Never allow the AI to edit your test file to make it pass.\"",
+        desc: "Treat your test file as an immutable contract. Only permit Codex to edit the implementation file.",
+        bullets: []
+      },
+      {
+        tag: "DEMO TRANSITION",
+        title: "Live Demonstration",
+        desc: "Driving the TDD Loop via the Codex Extension GUI in VS Code",
+        bullets: ["VS Code Editor", "Codex Side Panel", "Diff Viewer", "Pytest Terminal Runner"]
+      },
+      {
+        tag: "SUMMARY",
+        title: "Practical Takeaways",
+        desc: "Core Principles of AI-Assisted TDD",
+        bullets: [
+          "Pin Tests as Context Anchors: Use #file in the Codex prompt box.",
+          "Enforce Test Immutability: Prevent the model from weakening assertions.",
+          "Visual Diff Supervision: Inspect all changes before clicking Accept."
+        ]
+      }
+    ];
+
+    let currentSlide = 0;
+    let seconds = 0;
+    let isRunning = false;
+    let interval = null;
+
+    function renderSlide(index) {
+      const s = slides[index];
+      document.getElementById('slideTag').innerText = s.tag;
+      document.getElementById('slideTitle').innerText = s.title;
+      document.getElementById('slideDesc').innerText = s.desc;
+      const list = document.getElementById('slideList');
+      list.innerHTML = "";
+      s.bullets.forEach(b => {
+        const li = document.createElement('li');
+        li.innerText = b;
+        list.appendChild(li);
+      });
+
+      // Highlight active cue card
+      document.querySelectorAll('.cue-card').forEach((c, i) => {
+        c.classList.toggle('active', i === index);
+      });
+      const activeCard = document.getElementById(`cue-${index}`);
+      if (activeCard) {
+        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderSlide(currentSlide);
+      }
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        clearInterval(interval);
+        document.getElementById('startBtn').innerText = "▶ Resume Rehearsal";
+        isRunning = false;
+      } else {
+        interval = setInterval(() => {
+          seconds++;
+          const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const secs = String(seconds % 60).padStart(2, '0');
+          document.getElementById('timer').innerText = `${mins}:${secs} / 06:30`;
+        }, 1000);
+        document.getElementById('startBtn').innerText = "⏸ Pause Rehearsal";
+        isRunning = true;
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(interval);
+      isRunning = false;
+      seconds = 0;
+      document.getElementById('timer').innerText = "00:00 / 06:30";
+      document.getElementById('startBtn').innerText = "▶ Start Rehearsal";
+      currentSlide = 0;
+      renderSlide(0);
+    }
+
+    renderSlide(0);
+  </script>
+</body>
+</html>

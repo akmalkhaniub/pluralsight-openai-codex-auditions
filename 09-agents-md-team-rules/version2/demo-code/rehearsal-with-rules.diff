@@ -1,0 +1,92 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index c8db96b..2f614ae 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,6 +1,7 @@
+ # Changelog
+ 
+ ## Unreleased
++- Add SAVE10 coupon support with Decimal cent rounding and input validation.
+ 
+ ## 1.2.0
+ - Order totals are rounded to cents.
+diff --git a/shop/pricing.py b/shop/pricing.py
+index a9379c7..e306f97 100644
+--- a/shop/pricing.py
++++ b/shop/pricing.py
+@@ -1,4 +1,6 @@
+-from decimal import Decimal, ROUND_HALF_UP
++from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
++
++from shop.errors import AppError
+ 
+ 
+ def order_total(prices: list[Decimal]) -> Decimal:
+@@ -7,3 +9,20 @@ def order_total(prices: list[Decimal]) -> Decimal:
+     Example: order_total([Decimal("9.99"), Decimal("5.01")]) -> Decimal("15.00")
+     """
+     return sum(prices, Decimal("0")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
++
++
++def apply_coupon(total: Decimal, code: str) -> Decimal:
++    """Apply SAVE10 to a finite, nonnegative total and round to cents.
++
++    Example: apply_coupon(Decimal("10.00"), "SAVE10") -> Decimal("9.00")
++    """
++    if code != "SAVE10":
++        raise AppError("INVALID_COUPON", "Coupon code is invalid.")
++    if not isinstance(total, Decimal) or not total.is_finite() or total < 0:
++        raise AppError("INVALID_TOTAL", "Total must be a finite, nonnegative Decimal.")
++    try:
++        return (total * Decimal("0.90")).quantize(
++            Decimal("0.01"), rounding=ROUND_HALF_UP
++        )
++    except InvalidOperation as exc:
++        raise AppError("INVALID_TOTAL", "Total cannot be rounded to cents.") from exc
+diff --git a/tests/test_pricing.py b/tests/test_pricing.py
+index b22bc01..6f7b756 100644
+--- a/tests/test_pricing.py
++++ b/tests/test_pricing.py
+@@ -1,7 +1,8 @@
+ import unittest
+ from decimal import Decimal
+ 
+-from shop.pricing import order_total
++from shop.errors import AppError
++from shop.pricing import apply_coupon, order_total
+ 
+ 
+ class OrderTotalTests(unittest.TestCase):
+@@ -9,5 +10,32 @@ class OrderTotalTests(unittest.TestCase):
+         self.assertEqual(order_total([Decimal("9.99"), Decimal("5.01")]), Decimal("15.00"))
+ 
+ 
++class ApplyCouponTests(unittest.TestCase):
++    def test_save10_discounts_and_rounds_to_cents(self):
++        for total, expected in [("100.00", "90.00"), ("0", "0.00"),
++                                ("0.05", "0.05"), ("1.01", "0.91")]:
++            with self.subTest(total=total):
++                result = apply_coupon(Decimal(total), "SAVE10")
++                self.assertIsInstance(result, Decimal)
++                self.assertEqual(result, Decimal(expected))
++                self.assertEqual(result.as_tuple().exponent, -2)
++
++    def test_rejects_other_codes(self):
++        for code in ("SAVE20", "save10", "", " SAVE10", None, 10):
++            with self.subTest(code=code):
++                with self.assertRaises(AppError) as raised:
++                    apply_coupon(Decimal("10.00"), code)
++                self.assertEqual(raised.exception.code, "INVALID_COUPON")
++
++    def test_rejects_invalid_totals(self):
++        for total in (None, "10.00", 10, Decimal("-1"), Decimal("NaN"),
++                      Decimal("sNaN"), Decimal("Infinity"), Decimal("-Infinity"),
++                      Decimal("1E+100")):
++            with self.subTest(total=total):
++                with self.assertRaises(AppError) as raised:
++                    apply_coupon(total, "SAVE10")
++                self.assertEqual(raised.exception.code, "INVALID_TOTAL")
++
++
+ if __name__ == "__main__":
+     unittest.main()

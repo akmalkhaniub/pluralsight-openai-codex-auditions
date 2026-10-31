@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Codex Live Demo Teleprompter (Clip B)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --spoken: #38bdf8;
+      --action: #fbbf24;
+      --code-bg: #020617;
+      --code-text: #a5f3fc;
+      --accent: #22c55e;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 30px;
+      line-height: 1.6;
+      font-size: 19px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 28px;
+      color: #fff;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 15px;
+      margin-top: 0;
+    }
+    .reset-banner {
+      background: #451a03;
+      border: 1px solid #b45309;
+      color: #fde68a;
+      padding: 14px 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      font-family: Consolas, monospace;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .scene-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .scene-time {
+      font-size: 15px;
+      color: var(--accent);
+      background: #052e16;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-top: 15px;
+      margin-bottom: 8px;
+    }
+    .title-action { color: var(--action); }
+    .title-spoken { color: var(--spoken); }
+    
+    .code-box {
+      background: var(--code-bg);
+      border: 1px solid #1e293b;
+      border-radius: 6px;
+      padding: 14px;
+      font-family: Consolas, "Cascadia Code", monospace;
+      font-size: 16px;
+      color: var(--code-text);
+      position: relative;
+      margin: 10px 0 15px 0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #334155;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: #475569;
+    }
+    .speech-box {
+      background: rgba(56, 189, 248, 0.08);
+      border-left: 4px solid var(--spoken);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 10px 0;
+      font-size: 21px;
+      line-height: 1.6;
+      color: #f1f5f9;
+    }
+    .speech-box p {
+      margin: 0 0 12px 0;
+    }
+    .speech-box p:last-child {
+      margin-bottom: 0;
+    }
+    .action-step {
+      margin: 6px 0;
+      color: #e2e8f0;
+      font-size: 17px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎙️ Codex Live Demo Teleprompter (Clip B)</h1>
+
+  <div class="reset-banner">
+    <div><strong>⚡ 5-Sec Reset Command:</strong> <code>cd G:\ReplitProjects\pluralsight-openai-codex-auditions\photo-take; git reset --hard HEAD; git clean -fd</code></div>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('cd G:\\ReplitProjects\\pluralsight-openai-codex-auditions\\photo-take; git reset --hard HEAD; git clean -fd')">Copy</button>
+  </div>
+
+  <!-- SCENE 1 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="scene-title">🟢 Scene 1: The Feature Developer</span>
+      <span class="scene-time">3:25 – 4:10</span>
+    </div>
+
+    <div class="section-title title-action">🖥️ Action in Codex App</div>
+    <div class="action-step">1. Start a <strong>New Thread</strong> (<code>Ctrl + N</code>) in project <strong>photo-take</strong>.</div>
+    <div class="action-step">2. Paste this prompt and press <strong>Enter</strong>:</div>
+    <div class="code-box">
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
+<span>Let users upload a profile photo. Add upload_avatar(user_id, file) to app/profile.py that reads the file stream and saves it under avatars/ using open(), and updates the user's avatar_url. Add tests and run them.</span>
+    </div>
+    <div class="action-step">3. <em>Take hands off mouse. Let Codex finish. Wait is cut later in video editing.</em></div>
+
+    <div class="section-title title-spoken">🎙️ What to Speak (Line-by-Line)</div>
+    <div class="speech-box">
+      <p>Here we are in our clean bookshop repository.</p>
+      <p>In the composer, I'll paste our feature request:</p>
+      <p><em>"Let users upload a profile photo. Add upload_avatar in app/profile.py that reads the file stream and saves it under avatars using open, and update the avatar URL. Add tests and run them."</em></p>
+      <p>Codex immediately inspects our repo context, writes the function, and runs the test suite.</p>
+      <p>And right there—all unit tests passing, clean assertions.</p>
+      <p>The Feature Developer satisfied the ticket requirements and thinks the job is done.</p>
+      <p>But are we ready to commit? Absolutely not.</p>
+    </div>
+  </div>
+
+  <!-- SCENE 2 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="scene-title">🔍 Scene 2: The Senior PR Reviewer (The Ah-ha! Moment)</span>
+      <span class="scene-time">4:10 – 5:05</span>
+    </div>
+
+    <div class="section-title title-action">🖥️ Action in Codex App</div>
+    <div class="action-step">1. In the composer, type: <code>/review</code> and hit Enter.</div>
+    <div class="action-step">2. Select: <strong>"Review uncommitted changes"</strong>.</div>
+    <div class="action-step">3. Review pane opens. Codex highlights lines 25–32 with a <strong>P2 finding</strong>.</div>
+
+    <div class="section-title title-spoken">🎙️ What to Speak (Line-by-Line)</div>
+    <div class="speech-box">
+      <p>Let's put on the Senior Reviewer's hat.</p>
+      <p>I'll type slash review, and choose <strong>Review uncommitted changes</strong>.</p>
+      <p>Codex shifts into adversarial inspection mode: it reads, analyzes failure modes, and changes zero code.</p>
+      <p>And look at what it just caught!</p>
+      <p>A <strong>Priority 2</strong> finding right on the file stream lines.</p>
+      <p>All unit tests passed, but Codex realized that if the server disk fills up or the connection terminates mid-transfer...</p>
+      <p>A half-written, corrupted file is permanently abandoned in our avatars storage!</p>
+      <p>The Feature Developer proved it worked under sunny-day conditions.</p>
+      <p>The Senior Reviewer proved what happens during a production failure.</p>
+    </div>
+  </div>
+
+  <!-- SCENE 3 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="scene-title">🎯 Scene 3: Point at the Line</span>
+      <span class="scene-time">5:05 – 5:40</span>
+    </div>
+
+    <div class="section-title title-action">🖥️ Action in Codex App</div>
+    <div class="action-step">1. In the diff pane, hover over line 25/26 (where the file is opened) and click the blue <strong>+</strong> icon.</div>
+    <div class="action-step">2. Paste this comment and click <strong>Comment</strong>:</div>
+    <div class="code-box">
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
+<span>Agreed: if saving fails, delete the half-saved file. Add a test for it.</span>
+    </div>
+    <div class="action-step">3. In the main chat composer below (shows <code>1 comment</code>), paste and send:</div>
+    <div class="code-box">
+      <button class="copy-btn" onclick="copyText(this)">Copy</button>
+<span>Address the inline comments and keep the scope minimal.</span>
+    </div>
+
+    <div class="section-title title-spoken">🎙️ What to Speak (Line-by-Line)</div>
+    <div class="speech-box">
+      <p>We're not going to re-prompt from scratch or let Codex guess.</p>
+      <p>I'll hover right over the line where the file handle is opened, click the plus icon, and leave our directive:</p>
+      <p><em>"Agreed: if saving fails, delete the half-saved file. Add a test for it."</em></p>
+      <p>Now in the composer, I reinforce the scope boundary:</p>
+      <p><em>"Address the inline comments and keep the scope minimal."</em></p>
+      <p>Hit send.</p>
+    </div>
+  </div>
+
+  <!-- SCENE 4 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="scene-title">🛠️ Scene 4: The Surgical Fix</span>
+      <span class="scene-time">5:40 – 6:00</span>
+    </div>
+
+    <div class="section-title title-action">🖥️ Action in Codex App</div>
+    <div class="action-step">1. Codex applies fix. Result: <strong>10 tests pass</strong>.</div>
+    <div class="action-step">2. At top of Review pane, change scope from <em>Uncommitted</em> to <strong>"Last Turn"</strong> to show the <strong>+6 −6</strong> diff.</div>
+
+    <div class="section-title title-spoken">🎙️ What to Speak (Line-by-Line)</div>
+    <div class="speech-box">
+      <p>Codex gets right to work.</p>
+      <p>Notice how disciplined this is:</p>
+      <p>It wraps the write stream in a clean try/except, triggers destination dot unlink, and adds a dedicated regression test that simulates a broken stream.</p>
+      <p>All tests are passing!</p>
+      <p>Switching the diff view to <strong>Last Turn</strong> confirms the beauty of this workflow:</p>
+      <p>Exactly six lines added, six lines modified.</p>
+      <p>No hallucinations, no unwanted refactoring.</p>
+    </div>
+  </div>
+
+  <!-- SCENE 5 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="scene-title">✅ Scene 5: The Clean Re-Review</span>
+      <span class="scene-time">6:00 – 6:17</span>
+    </div>
+
+    <div class="section-title title-action">🖥️ Action in Codex App</div>
+    <div class="action-step">1. In composer, type: <code>/review</code> $\rightarrow$ select <strong>"Review uncommitted changes"</strong>.</div>
+    <div class="action-step">2. Codex reports: <em>"No actionable issues found."</em></div>
+
+    <div class="section-title title-spoken">🎙️ What to Speak (Line-by-Line)</div>
+    <div class="speech-box">
+      <p>One final check to be certain:</p>
+      <p>Slash review, review uncommitted changes.</p>
+      <p>And there it is: <em>"No actionable issues found."</em></p>
+      <p>Now—and only now—are we confident to git commit and open our PR.</p>
+      <p>Let's see the side-by-side contrast.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function copyText(btn) {
+    const text = btn.parentElement.querySelector('span').innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerText;
+      btn.innerText = "Copied!";
+      btn.style.background = "#22c55e";
+      setTimeout(() => {
+        btn.innerText = orig;
+        btn.style.background = "#334155";
+      }, 1500);
+    });
+  }
+</script>
+
+</body>
+</html>

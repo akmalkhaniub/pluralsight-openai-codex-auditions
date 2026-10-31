@@ -1,0 +1,33 @@
+# Dependencies and compiled output
+__pycache__/
+*.py[cod]
+node_modules/
+.pytest_cache/
+
+# Audio scratch recordings & raw rehearsal assets
+*.wav
+*.aiff
+*.mp4
+*.mov
+*.m4a
+*.aac
+_rehearsal_raw/
+_to_delete/
+.build/
+.build*/
+.review*/
+login-take/
+photo-take/
+demo-clips/
+slide-clips/
+edited-recordings/
+finaldubbedrecording/
+Claude outputs/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore large master video exports (>100MB)
+10-codex-code-review/version3/audition_master_video.mp4

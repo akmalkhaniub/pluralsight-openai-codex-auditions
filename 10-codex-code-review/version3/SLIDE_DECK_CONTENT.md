@@ -1,0 +1,26 @@
+# Slide Deck Content: Who Reviews the AI? Code Review with Codex (v3)
+
+**Visual Standard:** Light slides only, 16:9 widescreen, clean fade/wipe builds.  
+**Palette:**  
+- **Pink (#E91E63):** The Feature Developer / Implementation Focus  
+- **Teal (#009688):** The Senior PR Reviewer / Adversarial Inspection  
+- **Emerald (#4CAF50):** Green checks / Passing Tests / Safe State  
+- **Amber/Red (#E53935):** Risk zones / Production Vulnerabilities  
+
+---
+
+| # | Slide Title | Visual Assets & Diagrammatic Layout | Build Sequence (Clicks) |
+|---|-------------|-------------------------------------|-------------------------|
+| **1** | **Title Slide** | Clean Pluralsight author card, instructor headshot badge with subtle magenta ring, name (*Akmal Khan*), title (*Senior Full Stack AI Architect*), URL (*akmalkhaniub.github.io*). | Fade transition on entry. *(No in-slide clicks; 1 click at end to advance).* |
+| **2** | **Meet Codex: OpenAI’s coding agent** | Horizontal 4-pillar architectural flow:<br>1. 📂 *Reads your repo*<br>2. 📝 *Writes the change*<br>3. 🧪 *Runs your tests*<br>4. 🔍 *You review the diff*<br>Bottom card: Supported surfaces (CLI, IDE, Windows App). | Pillar 1 → Pillar 2 → Pillar 3 → Pillar 4 → Bottom surface badge. |
+| **3** | **Overview: Review is the New Bottleneck** | Title: *"Codex writes code in minutes. Now reviewing is the slow part."*<br>Visual comparison bars: **Writing (5 min)** vs. **Reviewing (30 min)**.<br>WIIFM Box: *"Let Codex do the first review so you only check what matters."*<br>3-Act badges: 1. The Feature Dev · 2. The Senior Reviewer · 3. The Proof. | Title → Writing bar → Reviewing bar → Pulse alert → WIIFM box → 3-Act badges. |
+| **4** | **The PR Looks Green. Would You Approve It?** | **Code Card (`app/profile.py`):**<br>```python\ndef upload_avatar(user_id, file):\n    destination = AVATAR_DIR / f"{uuid4().hex}.png"\n    with open(destination, "wb") as target:\n        copyfileobj(file, target)\n    return f"/avatars/{destination.name}"\n```<br>Badges: 💬 Task: Profile Photo Upload · ✅ 9 tests passed · ✅ Error handling.<br>Quiz banner: *"Would you approve this Pull Request?"* → *"Hold that thought. Tests check what we asked for. Not what we forgot."* | Code snippet → Task badge → 9 tests check → Error handling check → Quiz banner pulse → "Hold that thought" → Takeaway footer. |
+| **5** | **Every Pull Request Needs a Second Pair of Eyes** | Dual circular badges with contrasting icons:<br>- Left (Pink): **The Feature Developer 💻** — *"Did I satisfy the ticket requirements?"* (Implementation Mode)<br>- Right (Teal): **The Senior PR Reviewer 🔍** — *"What breaks this in production?"* (Adversarial Failure Mode)<br>Bottom rule banner: *"Codex wears both hats. But never in the same prompt."* | Left Feature Dev circle → Right Senior Reviewer circle → Center "vs" → Bottom Rule banner. |
+| **6** | **Switch Hats with `/review`** | 4 Sequential action cards:<br>1. *Type `/review` in composer*<br>2. *Pick scope: Uncommitted changes*<br>3. *Read findings: Directly on the lines*<br>4. *You decide: Codex touches nothing yet*<br>Bottom selector preview: **Uncommitted changes** (highlighted) vs. **Against base branch**. | Card 1 → Card 2 → Card 3 → Card 4 → Scope selector popup. |
+| **7** | **Point at the Line. Keep the Fix Small.** | Code diff card with targeted annotation:<br>- Red bounding box on line 26: `with open(destination, "wb") as target:`<br>- Blue **+** icon hovering line 26.<br>- Inline comment bubble: *"If saving fails, delete the half-saved file. Add a test."*<br>- Composer instruction card: *"Address the inline comments and keep the scope minimal."*<br>- Engineering flow: **Build → Review → Commit**. | Line highlight + '+' icon → Inline comment popover → Composer directive → 1 fix + 1 test badge → Build-Review-Commit pipeline. |
+| **8** | **Live Demo Flight Plan** | Official Pluralsight Demo Transition Layout:<br>1. *Ask Codex to add profile photo upload (Feature Dev)*<br>2. */review → Review uncommitted changes (Senior Reviewer)*<br>3. *Comment on the risky line*<br>4. *Surgical fix, then re-review* | Step 1 → Step 2 → Step 3 → Step 4 → Ready prompt to switch to screencast. |
+| **9** | **One Review. One Real Risk Caught.** | Side-by-side comparison table:<br>- Left: **Feature Dev Only** (✓ Upload works, ✓ 9 tests pass, ✗ Disk full? Corrupt orphaned file left)<br>- Right: **Feature Dev + Senior Reviewer** (✓ Upload works, ✓ 10 tests pass, ✓ Failed saves cleanly purged).<br>Footer: *"The tests were green both times. The review made the difference."* | Feature Dev column → Red '✗' risk alert → Senior Reviewer column → Green '✓' cleanup badge → Footer verdict. |
+| **10** | **Your Turn: One Habit** | Center graphic: Giant `/review` keyboard shortcut keycap.<br>Core rule: *"After every Codex task. Before every commit."*<br>The 3 Reviewer Pillars:<br>📁 *What if it fails halfway?*<br>🔑 *Who is authorized to do this?*<br>💥 *What if input is empty or huge?* | Keycap entrance → Core rule underline → 3 question cards revealed sequentially. |
+| **11** | **Summary & Conclusion** | Pluralsight standard 4-point takeaway layout:<br>• *Review is the new bottleneck*<br>• *Switch hats: `/review` before commit*<br>• *Point at the line: Keep fixes surgical*<br>• *Codex finds. You decide.* | Bullet 1 → Bullet 2 → Bullet 3 → Bullet 4 → Fade out. |
+
+---
